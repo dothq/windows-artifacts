@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: windows-2019
+      SHELL: /bin/sh
+    steps:
+      - name: Clone mozilla-central
+        shell: bash
+        run: hg clone https://hg.mozilla.org/mozilla-central
+
+      - name: Bootstrap
+        shell: bash
+        run: |
+          cd mozilla-central
+          ./mach bootstrap --application-choice browser --no-interactive
+          
+      - name: Compress mozbuild
+        shell: bash
+        run: |
+          cd ~
+          tar -cf mozbuild.tar .mozbuild
+          
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Windows Artifact - ${{ github.ref }}
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /c/Users/user/mozbuild.tar
+          asset_name: mozbuild.tar
+          asset_content_type: application/x-tar
