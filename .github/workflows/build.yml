@@ -57,8 +57,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Windows Artifact - #${{ github.run_number }}
+          tag_name: "#${{ github.run_number }}"
+          release_name: "Windows Artifact - #${{ github.run_number }}"
           draft: false
           prerelease: false
           
@@ -69,6 +69,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /c/Users/runneradmin/mozbuild.tar
+          asset_path: C:\Users\runneradmin\mozbuild.tar
           asset_name: mozbuild.tar
           asset_content_type: application/x-tar
