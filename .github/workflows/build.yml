@@ -12,14 +12,6 @@ jobs:
       SHELL: /bin/sh
       MOZ_WINDOWS_BOOTSTRAP: 1 
     steps:
-      - uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: >-
-            base-devel
-            git
-            python
-            
       - name: Cache
         uses: actions/cache@v2
         with:
