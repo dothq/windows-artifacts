@@ -40,7 +40,7 @@ jobs:
         shell: cmd
         run: |
           type nul > C:\script
-          echo cd D:\windows-artifacts\windows-artifacts\mozilla-central >> C:\script
+          echo cd D:\a\windows-artifacts\windows-artifacts\mozilla-central >> C:\script
           echo ls >> C:\script
           echo ./mach bootstrap --application-choice browser --no-interactive >> C:\script
           C:\mozilla-build\start-shell.bat "C:\script"
