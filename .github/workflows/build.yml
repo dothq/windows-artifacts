@@ -69,6 +69,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /c/Users/$USER/mozbuild.tar
+          asset_path: /c/Users/runneradmin/mozbuild.tar
           asset_name: mozbuild.tar
           asset_content_type: application/x-tar
