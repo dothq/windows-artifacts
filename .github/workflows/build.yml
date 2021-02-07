@@ -19,16 +19,31 @@ jobs:
             base-devel
             git
             python
+            
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: /d/a/windows-artifacts/windows-artifacts/mozilla-central
+          key: ${{ runner.os }}
+          
+      - name: Clone mozillabuild
+        run: |
+          curl https://cdn.dothq.co/artifacts/tools/mozilla-build.zip -o mozilla-build.zip
+          ls
+          7z x mozilla-build.zip -aoa -oC:\mozilla-build 
         
       - name: Clone mozilla-central
         shell: bash
         run: hg clone https://hg.mozilla.org/mozilla-central
 
       - name: Bootstrap
-        shell: msys2 {0}
+        shell: cmd
         run: |
-          cd mozilla-central
-          ./mach bootstrap --application-choice browser --no-interactive
+          type nul > C:\script
+          echo cd D:\windows-artifacts\windows-artifacts\mozilla-central >> C:\script
+          echo ls >> C:\script
+          echo ./mach bootstrap --application-choice browser --no-interactive >> C:\script
+          C:\mozilla-build\start-shell.bat "C:\script"
           
       - name: Compress mozbuild
         shell: bash
