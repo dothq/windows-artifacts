@@ -18,8 +18,7 @@ jobs:
           install: >-
             base-devel
             git
-            python2
-            python3
+            python
         
       - name: Clone mozilla-central
         shell: bash
