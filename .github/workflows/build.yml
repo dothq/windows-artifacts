@@ -12,12 +12,21 @@ jobs:
       SHELL: /bin/sh
       MOZ_WINDOWS_BOOTSTRAP: 1 
     steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            base-devel
+            git
+            python2
+            python3
+        
       - name: Clone mozilla-central
         shell: bash
         run: hg clone https://hg.mozilla.org/mozilla-central
 
       - name: Bootstrap
-        shell: bash
+        shell: msys2 {0}
         run: |
           cd mozilla-central
           ./mach bootstrap --application-choice browser --no-interactive
@@ -43,9 +52,9 @@ jobs:
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /c/Users/user/mozbuild.tar
+          asset_path: /c/Users/$USER/mozbuild.tar
           asset_name: mozbuild.tar
           asset_content_type: application/x-tar
