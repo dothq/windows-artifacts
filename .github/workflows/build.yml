@@ -57,8 +57,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Windows Artifact - ${{ github.ref }}
+          tag_name: ${{ github.run_number }}
+          release_name: Windows Artifact - #${{ github.run_number }}
           draft: false
           prerelease: false
           
