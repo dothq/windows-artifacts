@@ -41,7 +41,7 @@ jobs:
         shell: bash
         run: |
           cd ~
-          tar -cf mozbuild.tar .mozbuild
+          tar --strip-components=1 -cjvf mozbuild.tar.bz2 .mozbuild
           
       - name: Create release
         id: create_release
@@ -61,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: C:\Users\runneradmin\mozbuild.tar
-          asset_name: mozbuild.tar
-          asset_content_type: application/x-tar
+          asset_path: C:\Users\runneradmin\mozbuild.tar.bz2
+          asset_name: mozbuild.tar.bz2
+          asset_content_type: application/x-bzip-compressed-tar
