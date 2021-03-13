@@ -10,14 +10,7 @@ jobs:
     runs-on: windows-2019
     env:
       SHELL: /bin/sh
-      MOZ_WINDOWS_BOOTSTRAP: 1 
-    steps:
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: /d/a/windows-artifacts/windows-artifacts/mozilla-central
-          key: ${{ runner.os }}
-          
+    steps:          
       - name: Clone mozillabuild
         run: |
           curl https://cdn.dothq.co/artifacts/tools/mozilla-build.zip -o mozilla-build.zip
